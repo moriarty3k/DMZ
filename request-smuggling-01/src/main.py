@@ -38,4 +38,4 @@ if __name__ == '__main__':
     api.add_resource(InternalAPI, '/api/internal')
 
     print("Server running on port 1337")
-    socketio.run(app, host='0.0.0.0', port=1337, debug=True) #, host='localhost'
+    socketio.run(app, host='0.0.0.0', port=1337, debug=True) #, #the changes at this commit are not affect to the challenge yet
