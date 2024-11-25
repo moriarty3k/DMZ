@@ -5,7 +5,7 @@
     Subcribe để nhận thông báo mới nhất.
     <form method='post' action=''>
         <div class="form-group"> 
-            <input placeholder="Điền email của bạn (admin@example.com)" name="email" size=50></input> <button class="btn btn-default" type="submit" name='submit'>Submit</button>
+            <input placeholder="Điền email của bạn (admin@example.com)" name="email" type="email" size=50></input> <button class="btn btn-default" type="submit" name='submit'>Submit</button>
        </div> 
     </form>
 
