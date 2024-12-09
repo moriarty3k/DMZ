@@ -1,4 +1,9 @@
 <?php
+#include('config.php');
+if (!isset($_SESSION['username'])) {
+    header('Location: login.php');
+    exit();
+}
 
 $uploadDirectory = 'upload/';
 
@@ -10,17 +15,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $fileName = basename($file['name']);
             $filePath = $uploadDirectory . uniqid() . '-' . $fileName;
 
-            // Open the uploaded file to read its contents
             $fileStream = fopen($file['tmp_name'], 'rb');
-            $magicBytes = fread($fileStream, 4); // Read the first 4 bytes
+            $magicBytes = fread($fileStream, 4); 
             fclose($fileStream);
 
-            // Map magic bytes to file types
+            
             $magicByteMap = [
-                "\xFF\xD8\xFF" => "jpeg", // JPEG
-                "\x89\x50\x4E\x47" => "png", // PNG
-                "GIF87a" => "gif", // GIF
-                "GIF89a" => "gif", // GIF (alternate)
+                "\xFF\xD8\xFF" => "jpeg",
+                "\x89\x50\x4E\x47" => "png", 
+                "GIF87a" => "gif", 
+                "GIF89a" => "gif", 
             ];
 
             $isValidFile = false;
@@ -35,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             if ($isValidFile) {
-                // Validate the actual image content
                 $isRenderable = false;
                 switch ($fileType) {
                     case 'jpeg':
@@ -50,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 if ($isRenderable) {
-                    // Move the uploaded file
                     if (move_uploaded_file($file['tmp_name'], $filePath)) {
                         echo json_encode(['success' => true, 'file' => $filePath]);
                         return;
@@ -73,7 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// List uploaded files
 $files = array_diff(scandir($uploadDirectory), ['.', '..']);
 echo json_encode(['success' => true, 'files' => $files]);
 
